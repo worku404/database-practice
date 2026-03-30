@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS Order_Items;
 DROP TABLE IF EXISTS Orders;
 DROP TABLE IF EXISTS Addresses;
 DROP TABLE IF EXISTS Products;
+DROP TABLE IF EXISTS Categories;
 DROP TABLE IF EXISTS Users;
 
 # Create the database if it does not exist and swith to it.
@@ -105,5 +106,33 @@ CREATE TABLE Addresses(
 
 
 
-# Table Orders
- # Represents a customer's purchase.
+-- # Table : Orders
+-- # Represents a customer's purchase.
+
+CREATE TABLE Orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    total_amount DECIMAL(10, 2) NOT NULL,
+    
+    status VARCHAR(10) DEFAULT 'pending',
+    shipping_address_id INT
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+
+-- # Table : Order_items
+-- # Juction table linking Orders and Products, detailing each item in an order.
+
+
+CREATE TABLE Order_Items(
+    order_item_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+    price_at_order DECIMAL(10, 2) NOT NULL,
+
+    UNIQUE (order_id, product_id)
+);
