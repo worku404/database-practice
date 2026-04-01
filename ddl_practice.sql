@@ -182,3 +182,15 @@ FOREIGN KEY (product_id) REFERENCES products(product_id)
 ON DELETE RESTRICT ON UPDATE CASCADE;
 
 
+-- SECTION 4 INDEXES (highly recommended for performance)
+
+CREATE INDEX idx_user_email ON users(email);
+-- create an index on product name for searching
+
+CREATE INDEX inx_products_name ON products(name);
+
+-- create an index on order status for filtering orders
+CREATE INDEX idx_orders_status ON orders(status);
+
+-- create an index on order date for filtering orders
+CREATE INDEX inx_orders_order_date ON orders(order_date);
