@@ -173,3 +173,12 @@ ALTER TABLE order_items
 ADD CONSTRAINT fk_order_item_order
 FOREIGN KEY (order_id) REFERENCES orders(order_id)
 ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+
+ALTER TABLE order_items
+ADD CONSTRAINT fk_order_item_product
+FOREIGN KEY (product_id) REFERENCES products(product_id)
+ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
