@@ -194,3 +194,42 @@ CREATE INDEX idx_orders_status ON orders(status);
 
 -- create an index on order date for filtering orders
 CREATE INDEX inx_orders_order_date ON orders(order_date);
+
+
+-- Basic data insertion
+
+INSERT INTO categories (name, description) VALUES
+('Electronics', 'Dadgets and electornic devices'),
+('Books', 'All kinds of books'),
+('apparel', 'clothing and fashion accessories');
+
+
+
+-- Insert some products
+INSERT INTO Products (name, description, price, stock_quantity, category_id) VALUES
+('Laptop Pro X', 'High-performance laptop for professionals', 1200.00, 50, (SELECT category_id FROM Categories WHERE name = 'Electronics')),
+('The Art of SQL', 'A guide to mastering SQL queries', 35.50, 100, (SELECT category_id FROM Categories WHERE name = 'Books')),
+('Wireless Headphones', 'Noise-cancelling over-ear headphones', 150.00, 200, (SELECT category_id FROM Categories WHERE name = 'Electronics')),
+('Cotton T-Shirt', 'Comfortable unisex cotton t-shirt', 20.00, 300, (SELECT category_id FROM Categories WHERE name = 'Apparel'));
+
+-- Insert a user
+INSERT INTO Users (username, email, password_hash, first_name, last_name, is_admin) VALUES
+('john_doe', 'john.doe@example.com', 'hashed_password_123', 'John', 'Doe', FALSE),
+('admin_user', 'admin@example.com', 'admin_hashed_password', 'Admin', 'User', TRUE);
+
+-- Insert addresses for john_doe
+INSERT INTO Addresses (user_id, address_line1, address_line2, city, state, postal_code, country, is_default) VALUES
+((SELECT user_id FROM Users WHERE username = 'john_doe'), '123 Main St', NULL, 'Anytown', 'CA', '90210', 'USA', TRUE),
+((SELECT user_id FROM Users WHERE username = 'john_doe'), '456 Oak Ave', 'Apt 10', 'Otherville', 'NY', '10001', 'USA', FALSE);
+
+-- Insert an order for john_doe
+INSERT INTO Orders (user_id, total_amount, status, shipping_address_id) VALUES
+((SELECT user_id FROM Users WHERE username = 'john_doe'), 1235.50, 'pending', (SELECT address_id FROM Addresses WHERE user_id = (SELECT user_id FROM Users WHERE username = 'john_doe') AND is_default = TRUE));
+
+-- Insert order items for the order
+INSERT INTO Order_Items (order_id, product_id, quantity, price_at_order) VALUES
+((SELECT order_id FROM Orders WHERE user_id = (SELECT user_id FROM Users WHERE username = 'john_doe')), (SELECT product_id FROM Products WHERE name = 'Laptop Pro X'), 1, 1200.00),
+((SELECT order_id FROM Orders WHERE user_id = (SELECT user_id FROM Users WHERE username = 'john_doe')), (SELECT product_id FROM Products WHERE name = 'The Art of SQL'), 1, 35.50);
+
+
+SELECT 'E-commerce database schema and initial data created successfully!' AS Message;
