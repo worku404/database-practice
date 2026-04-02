@@ -126,7 +126,25 @@ CREATE TABLE Orders (
 -- # Table : Order_items
 -- # Juction table linking Orders and Products, detailing each item in an order.
 
+####################################################################33
+-- additional practice
 
+ALTER TABLE categories
+ADD COLUMN
+clothes VARCHAR(50);
+DESC categories;
+
+ALTER TABLE categories
+DROP COLUMN clothes;
+
+SET FOREIGN KEY = 0;
+ALTER TABLE categories
+DROP COLUMN apparel;
+
+SHOW COLUMNs FROM categories;
+
+
+-- ##############################################################33
 CREATE TABLE Order_Items(
     order_item_id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
@@ -203,7 +221,9 @@ INSERT INTO categories (name, description) VALUES
 ('Books', 'All kinds of books'),
 ('apparel', 'clothing and fashion accessories');
 
-
+INSERT INTO categories (name, description) VALUES(
+    'clothes', 'all type of clothes'
+);
 
 -- Insert some products
 INSERT INTO Products (name, description, price, stock_quantity, category_id) VALUES
