@@ -150,6 +150,7 @@ FROM products;
     -- orders placed after a specific date
     -- products conataining 'book' in their name 
     -- users whose first name is john or alice
+    -- product quantity with reange 20-3000
 ####################
 
 
@@ -162,4 +163,17 @@ WHERE is_admin=TRUE;
 
 SELECT order_id, order_date, total_amount from orders
 WHERE order_date > '1999-10-03';
+
+SELECT name, price, description 
+FROM products
+WHERE name LIKE '%book%';
+
+
+SELECT first_name as NAME
+FROM users
+WHERE first_name='worku'   OR first_name='john';
+
+SELECT name, description 
+FROM products
+WHERE price BETWEEN 20 AND 3000;
 
